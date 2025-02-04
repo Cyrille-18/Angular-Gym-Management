@@ -1,0 +1,59 @@
+<div class="home-container">
+  <!-- Top row (Nos Offres + Calendrier) -->
+  <div class="top-row">
+    <!-- Offers Card -->
+    <div class="card offers-card">
+      <div class="card-header">
+        <h2>Nos Offres</h2>
+      </div>
+      <div class="card-content">
+        <div class="offers-grid">
+          <div *ngFor="let offer of offers" class="offer-item">
+            <h3>{{ offer.name }}</h3>
+            <p class="price">{{ offer.price }}</p>
+            <ul>
+              <li *ngFor="let feature of offer.features">{{ feature }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar Card -->
+    <div class="card calendar-card">
+      <div class="card-header">
+        <h2>Calendrier</h2>
+      </div>
+      <div class="card-content">
+        <div class="calendar-placeholder">
+          <p>Calendrier à implémenter</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom row (Les Nouveaux Clients) -->
+  <div class="card clients-card">
+    <div class="card-header">
+      <h2>Les Nouveaux Clients</h2>
+    </div>
+    <div class="card-content">
+      <table class="clients-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Date d'inscription</th>
+            <th>Forfait</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of newClients">
+            <td>{{ client.name }}</td>
+            <td>{{ client.date | date : "dd/MM/yyyy" }}</td>
+            <td>{{ client.plan }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

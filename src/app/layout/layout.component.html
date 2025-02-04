@@ -1,0 +1,62 @@
+<!-- layout.component.html -->
+<div class="layout-container" *ngIf="shouldShowLayout()">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-start">
+      <button class="menu-button" (click)="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="navbar-title">Basic-Fit</h1>
+    </div>
+    <div class="navbar-end">
+      <div class="user-info">
+        <i class="fas fa-user"></i>
+        <span class="username">username</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.sidebar-closed]="!isSidebarOpen">
+    <nav class="sidebar-nav">
+      <a
+        routerLink="/home"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+      >
+        <i class="fas fa-home"></i>
+        <span>Acceuil</span>
+      </a>
+      <a routerLink="/users" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Gestion Des Clients</span>
+      </a>
+      <a routerLink="/messages" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-envelope"></i>
+        <span>Messages</span>
+      </a>
+      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-cog"></i>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-button">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" [class.sidebar-closed]="!isSidebarOpen">
+    <ng-content>
+      <app-home></app-home>
+    </ng-content>
+  </main>
+</div>
+
+<ng-container *ngIf="!shouldShowLayout()">
+  <ng-content></ng-content>
+</ng-container>

@@ -1,22 +1,29 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CustomersComponent } from './pages/customers/customers.component';
+import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
-    // Routes sans layout
+    // Route sans layout (Page de connexion)
     {
         path: '',
         component: LoginComponent,
     },
+
+    // Routes avec layout (Dashboard)
     {
-        path: 'home',
-        component: HomeComponent,
+        path: 'app',  // On change le préfixe pour éviter les conflits
+        component: LayoutComponent,
+        children: [
+            { path: 'Accueil', component: HomeComponent },
+            { path: 'Client', component: CustomersComponent }
+        ]
     },
-    // Routes avec layout
-    
-    // Redirection  en cas de routes inconnues
+
+    // Redirection pour toutes les routes inconnues
     {
         path: '**',
-        component: LoginComponent
+        redirectTo: ''
     }
 ];

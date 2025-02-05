@@ -1,0 +1,138 @@
+/* Overlay de la modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+/* Conteneur de la modal */
+.modal-container {
+  background: #f9f9fb; /* Blanc cassé moderne */
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Icône de fermeture */
+.close-icon {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-icon:hover {
+  color: #6a0dad; /* Violet */
+}
+
+/* Titre du formulaire */
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
+  text-transform: capitalize;
+}
+
+/* Style des labels */
+label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+
+/* Style des champs de saisie */
+input {
+  width: 100%; /* Largeur uniforme */
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  background-color: #fff;
+  font-family: "Inter", sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+input:focus {
+  border: 1px solid #6a0dad;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(106, 13, 173, 0.3);
+}
+
+/* Style du bouton */
+button {
+  padding: 14px;
+  background: #4338ca; /* Violet moderne */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%; /* Largeur ajustée */
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* Effet hover */
+button:hover {
+  background: #4338ca; /* Violet foncé au survol */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(106, 13, 173, 0.4);
+}
+
+/* Effet d’appui */
+button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 500px) {
+  .modal-container {
+    padding: 25px;
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}

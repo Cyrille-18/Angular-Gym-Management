@@ -1,0 +1,68 @@
+<body>
+  <div class="customer-container">
+    <div class="header-container">
+      <div class="controls-wrapper">
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Rechercher un client..."
+            [(ngModel)]="searchTerm"
+            (input)="filterCustomers()"
+          />
+        </div>
+        <button class="add-button" (click)="openModal()">
+          <span>＋</span>
+          Ajouter un Client
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date D'inscription</th>
+            <th>Abonnement actif</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of filteredCustomers">
+            <td>{{ customer.nom }}</td>
+            <td>{{ customer.prenom }}</td>
+            <td>{{ customer.dateInscription }}</td>
+            <td>{{ customer.abonnementActif ? "Oui" : "Non" }}</td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="edit-button"
+                  (click)="editCustomer(customer.id)"
+                  title="Modifier"
+                >
+                  ✎
+                </button>
+                <button
+                  class="delete-button"
+                  (click)="deleteCustomer(customer.id)"
+                  title="Supprimer"
+                >
+                  🗑
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredCustomers.length === 0">
+            <td colspan="5" class="no-data">Aucun client trouvé</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <app-customermodal
+    *ngIf="isModalOpen"
+    (close)="closeModal()"
+  ></app-customermodal>
+</body>

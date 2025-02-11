@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CustomersComponent } from '../pages/customers/customers.component';
 import { HomeComponent } from '../pages/home/home.component';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/authservice/auth.service';
 
 @Component({
   selector: 'app-layout',

@@ -1,4 +1,3 @@
-<!-- layout.component.html -->
 <div class="layout-container" *ngIf="shouldShowLayout()">
   <!-- Navbar -->
   <nav class="navbar">
@@ -11,7 +10,8 @@
     <div class="navbar-end">
       <div class="user-info">
         <i class="fas fa-user"></i>
-        <span class="username">username</span>
+        <span class="username">{{ username }}</span>
+        <!-- Affiche 'Invité' si username est indéfini -->
       </div>
     </div>
   </nav>
@@ -19,14 +19,9 @@
   <!-- Sidebar -->
   <aside class="sidebar" [class.sidebar-closed]="!isSidebarOpen">
     <nav class="sidebar-nav">
-      <a
-        routerLink="/app/Accueil"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-item"
-      >
+      <a routerLink="/app/Accueil" routerLinkActive="active" class="nav-item">
         <i class="fas fa-home"></i>
-        <span>Acceuil</span>
+        <span>Accueil</span>
       </a>
       <a routerLink="/app/Client" routerLinkActive="active" class="nav-item">
         <i class="fas fa-users"></i>
@@ -46,14 +41,13 @@
       </a>
     </nav>
     <div class="sidebar-footer">
-      <button class="logout-button">
+      <button class="logout-button" (click)="onLogout()">
         <i class="fas fa-sign-out-alt"></i>
         <span>Déconnexion</span>
       </button>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <!-- Main Content -->
   <main class="main-content" [class.sidebar-closed]="!isSidebarOpen">
     <app-home *ngIf="activePage === '/app/Accueil'"></app-home>

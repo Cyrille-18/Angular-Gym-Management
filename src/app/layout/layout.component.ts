@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CustomersComponent } from '../pages/customers/customers.component';
 import { HomeComponent } from '../pages/home/home.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -14,23 +15,37 @@ import { HomeComponent } from '../pages/home/home.component';
 export class LayoutComponent {
   isSidebarOpen = true;
   activePage = '';
-
-  constructor(private router: Router) {}
+  username = "junior";
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    // Écoute les changements de navigation et met à jour activePage
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.activePage = event.urlAfterRedirects;
       }
     });
+  
+      // Force le rechargement du username au démarrage
+    this.authService.decodeToken();
+    // Met à jour le username en écoutant les changements
+    this.authService.getUsernameObservable().subscribe(name => {
+      this.username = name || 'Invité';
+      console.log('Nom d’utilisateur mis à jour:', this.username);
+    });
   }
+  
+  
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   shouldShowLayout(): boolean {
-    return this.router.url !== '/'; // Cache le layout sur la page de login
+    return this.router.url !== '/';
+  }
+  
+  onLogout() {
+    this.authService.logout();  // Appelle la fonction logout du service
+    this.router.navigate(['']);  // Redirige vers la page de connexion
   }
 }

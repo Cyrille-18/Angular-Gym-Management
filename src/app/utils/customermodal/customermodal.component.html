@@ -1,13 +1,13 @@
 <div class="modal-overlay">
   <div class="modal-container">
     <span class="close-icon" (click)="closeModal()">&times;</span>
-    <h2>Ajouter un Client</h2>
-    <form (submit)="addCustomer()">
+    <h2>{{ modalTitle }}</h2>
+    <form (ngSubmit)="saveCustomer()">
       <label for="nom">Nom</label>
       <input
         type="text"
         id="nom"
-        [(ngModel)]="customer.nom"
+        [(ngModel)]="customer.lastName"
         name="nom"
         required
       />
@@ -16,8 +16,17 @@
       <input
         type="text"
         id="prenom"
-        [(ngModel)]="customer.prenom"
+        [(ngModel)]="customer.firstName"
         name="prenom"
+        required
+      />
+
+      <label for="telephone">Téléphone</label>
+      <input
+        type="text"
+        id="phoneNumber"
+        [(ngModel)]="customer.phoneNumber"
+        name="phoneNumber"
         required
       />
 
@@ -25,12 +34,12 @@
       <input
         type="date"
         id="dateInscription"
-        [(ngModel)]="customer.dateInscription"
+        [(ngModel)]="customer.registrationDate"
         name="dateInscription"
         required
       />
 
-      <button type="submit">Ajouter un Client</button>
+      <button type="submit">{{ buttonText }}</button>
     </form>
   </div>
 </div>

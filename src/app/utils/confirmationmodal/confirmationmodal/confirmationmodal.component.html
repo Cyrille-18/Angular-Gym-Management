@@ -1,0 +1,13 @@
+<div class="modal-background">
+  <div class="modal-content">
+    <h2>Confirmer la suppression</h2>
+    <p>
+      Êtes-vous sûr de vouloir supprimer
+      <strong>{{ customerName }}</strong> ? Cette action est irréversible.
+    </p>
+    <div class="modal-actions">
+      <button (click)="cancel()" class="cancel-btn">Annuler</button>
+      <button (click)="confirmDelete()" class="confirm-btn">Confirmer</button>
+    </div>
+  </div>
+</div>

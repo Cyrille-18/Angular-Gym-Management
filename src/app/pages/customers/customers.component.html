@@ -24,28 +24,36 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Date D'inscription</th>
+            <th>Telephone</th>
             <th>Abonnement actif</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let customer of filteredCustomers">
-            <td>{{ customer.nom }}</td>
-            <td>{{ customer.prenom }}</td>
-            <td>{{ customer.dateInscription }}</td>
-            <td>{{ customer.abonnementActif ? "Oui" : "Non" }}</td>
+            <td>{{ customer.firstName }}</td>
+            <td>{{ customer.lastName }}</td>
+            <td>{{ customer.registrationDate | date : "dd MMM yyyy" }}</td>
+            <td>{{ customer.phoneNumber }}</td>
+            <td>{{ customer.activeSubscription ? "Oui" : "Non" }}</td>
             <td>
               <div class="action-buttons">
                 <button
                   class="edit-button"
-                  (click)="editCustomer(customer.id)"
+                  (click)="editCustomer(customer.userId)"
                   title="Modifier"
                 >
                   ✎
                 </button>
                 <button
                   class="delete-button"
-                  (click)="deleteCustomer(customer.id)"
+                  (click)="
+                    deleteCustomer(
+                      customer.userId,
+                      customer.firstName,
+                      customer.lastName
+                    )
+                  "
                   title="Supprimer"
                 >
                   🗑
@@ -60,9 +68,17 @@
       </table>
     </div>
   </div>
-
   <app-customermodal
     *ngIf="isModalOpen"
     (close)="closeModal()"
-  ></app-customermodal>
+    [customer]="selectedCustomer"
+  >
+  </app-customermodal>
+  <app-confirmationmodal
+    *ngIf="isConfirmationModalOpen"
+    [customerId]="selectedCustomerId"
+    [customerName]="selectedCustomerName"
+    (close)="handleConfirmation($event)"
+  >
+  </app-confirmationmodal>
 </body>

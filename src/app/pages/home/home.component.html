@@ -9,10 +9,11 @@
       <div class="card-content">
         <div class="offers-grid">
           <div *ngFor="let offer of offers" class="offer-item">
-            <h3>{{ offer.name }}</h3>
-            <p class="price">{{ offer.price }}</p>
+            <h3>{{ offer.packName }}</h3>
+            <p class="price">{{ offer.monthlyPrice }} FCFA</p>
             <ul>
-              <li *ngFor="let feature of offer.features">{{ feature }}</li>
+              <li>Durée : {{ offer.durationMonths }} mois</li>
+              <li>{{ offer.packDescription }}</li>
             </ul>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CustomerService } from '../../services/customerservice/customer.service';  // Assurez-vous d'importer le service
+import { CustomerService } from '../../services/customerservice/customer.service';
 
 @Component({
   selector: 'app-customermodal',
@@ -10,23 +10,17 @@ import { CustomerService } from '../../services/customerservice/customer.service
   styleUrls: ['./customermodal.component.css']
 })
 export class CustomermodalComponent implements OnChanges {
-  @Input() customer: any = { 
-    lastName: '', 
-    firstName: '', 
-    phoneNumber: '', 
-    registrationDate: "" 
-  }; // Données du client à modifier
+  @Input() customer: any = { lastName: '', firstName: '', phoneNumber: '', registrationDate: '' };
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<any>();  // Pour émettre les données après modification
+  @Output() save = new EventEmitter<any>();
 
   modalTitle: string = 'Ajouter un Client';
   buttonText: string = 'Ajouter un Client';
 
-  constructor(private customerService: CustomerService) {}  // Injection du service
+  constructor(private customerService: CustomerService) {}
 
   ngOnChanges(): void {
-    if (this.customer && this.customer.lastName) {
-      // Si le client a des données, on change le titre et le texte du bouton
+    if (this.customer && this.customer.userId) {
       this.modalTitle = 'Modifier un Client';
       this.buttonText = 'Modifier le Client';
     } else {
@@ -35,9 +29,8 @@ export class CustomermodalComponent implements OnChanges {
     }
   }
 
-  // Ajouter ou modifier un client
   saveCustomer(): void {
-    const updatedCustomer = {
+    const customerData = {
       lastName: this.customer.lastName,
       firstName: this.customer.firstName,
       phoneNumber: this.customer.phoneNumber,
@@ -45,21 +38,29 @@ export class CustomermodalComponent implements OnChanges {
     };
 
     if (this.customer.userId) {
-      // Si un client est déjà sélectionné, on modifie
-      this.customerService.updateCustomer(this.customer.userId, updatedCustomer).subscribe({
+      this.customerService.updateCustomer(this.customer.userId, customerData).subscribe({
         next: (response) => {
-          this.save.emit(updatedCustomer);
+          this.save.emit(response);
           this.closeModal();
         },
         error: (error) => {
           console.error('Erreur lors de la mise à jour du client:', error);
         }
       });
-    } 
+    } else {
+      this.customerService.addCustomer(customerData).subscribe({
+        next: (response) => {
+          this.save.emit(response);
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout du client:', error);
+        }
+      });
+    }
   }
 
   closeModal(): void {
     this.close.emit();
   }
-  
 }

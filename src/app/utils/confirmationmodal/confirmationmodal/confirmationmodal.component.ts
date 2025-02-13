@@ -4,11 +4,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-confirmationmodal',
   imports: [],
   templateUrl: './confirmationmodal.component.html',
-  styleUrl: './confirmationmodal.component.css'
+  styleUrl: './confirmationmodal.component.css',
 })
 export class ConfirmationmodalComponent {
-  @Input() customerId!: number; // Assurez-vous que l'ID est bien passé
-  @Input() customerName: string = '';
+  @Input() objectId!: number; // Assurez-vous que l'ID est bien passé
+  @Input() objectName: string = '';
   @Output() close = new EventEmitter<boolean>(); // Émission de l'événement de fermeture
 
   confirmDelete() {

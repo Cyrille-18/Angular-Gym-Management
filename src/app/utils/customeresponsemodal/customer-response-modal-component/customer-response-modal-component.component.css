@@ -1,0 +1,141 @@
+/* Overlay qui couvre tout l'écran */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1000;
+  padding-top: 4vh;
+}
+
+/* Contenu du modal */
+.modal-content {
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 90%;
+  width: 380px;
+  position: relative;
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Titre */
+h2 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #8b5cf6;
+  border-radius: 2px;
+}
+
+/* Informations */
+.info-container {
+  background-color: #f8fafc;
+  padding: 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  margin: 1rem 0;
+}
+
+p {
+  margin: 0.8rem 0;
+  color: #4a5568;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+strong {
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.credential {
+  background-color: #edf2f7;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: monospace;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+/* Message d'avertissement */
+.warning {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  color: #856404;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.warning-icon {
+  color: #856404;
+  font-size: 1rem;
+  margin-top: 1px;
+}
+
+/* Bouton */
+button {
+  display: block;
+  width: auto;
+  min-width: 120px;
+  padding: 0.6rem 1.5rem;
+  margin: 1.2rem auto 0;
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+}
+
+button:hover {
+  background-color: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}

@@ -1,0 +1,21 @@
+<div class="modal">
+  <div class="modal-content">
+    <h2>Client ajouté avec succès !</h2>
+    <div class="info-container">
+      <p>
+        <strong>Nom d'utilisateur :</strong>
+        <span class="credential">{{ customerResponse?.username }}</span>
+      </p>
+      <p>
+        <strong>Mot de passe :</strong>
+        <span class="credential">{{ customerResponse?.password }}</span>
+      </p>
+    </div>
+    <div class="warning">
+      <span class="warning-icon">⚠️</span>
+      Pour des raisons de sécurité, vous devrez changer votre mot de passe lors
+      de votre première connexion.
+    </div>
+    <button (click)="closeModal()">Fermer</button>
+  </div>
+</div>

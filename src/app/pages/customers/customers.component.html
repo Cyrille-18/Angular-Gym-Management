@@ -68,12 +68,15 @@
       </table>
     </div>
   </div>
+
   <app-customermodal
     *ngIf="isModalOpen"
     (close)="closeModal()"
+    (save)="handleSaveCustomer($event)"
     [customer]="selectedCustomer"
   >
   </app-customermodal>
+
   <app-confirmationmodal
     *ngIf="isConfirmationModalOpen"
     [customerId]="selectedCustomerId"
@@ -81,4 +84,10 @@
     (close)="handleConfirmation($event)"
   >
   </app-confirmationmodal>
+
+  <app-customer-response-modal-component
+    *ngIf="showResponseModal"
+    [customerResponse]="customerResponse"
+    (close)="showResponseModal = false"
+  ></app-customer-response-modal-component>
 </body>

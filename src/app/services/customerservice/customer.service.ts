@@ -33,6 +33,7 @@ export class CustomerService {
 
     return this.http.put<any>(`${this.baseapiUrl}/users/customers/update/${id}`, customerData, { headers });
   }
+
   // suppresion d'un client par son id
   deleteCustomer(id: number): Observable<any> {
     const token = localStorage.getItem('token');
@@ -48,5 +49,22 @@ export class CustomerService {
         })
       );
   }
-  
+
+  // Ajouter un client
+
+  addCustomer(customerData: any): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.post<any>(`${this.baseapiUrl}/auth/register/customer`, customerData, { headers })
+    .pipe(
+      catchError((error) => {
+        console.error('Erreur lors de l\'ajout du client:', error);
+        return throwError(error); // Renvoyer l'erreur pour gestion dans le composant
+      })
+    );
+}
 }

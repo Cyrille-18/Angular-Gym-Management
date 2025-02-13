@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../services/customerservice/customer.service';
 import { CustomermodalComponent } from '../../utils/customermodal/customermodal.component';
 import { ConfirmationmodalComponent } from '../../utils/confirmationmodal/confirmationmodal/confirmationmodal.component';
+import { CustomerResponseModalComponentComponent } from '../../utils/customeresponsemodal/customer-response-modal-component/customer-response-modal-component.component';  
 
 @Component({
   selector: 'app-customers',
-  imports: [FormsModule, CommonModule, CustomermodalComponent,ConfirmationmodalComponent],
+  imports: [FormsModule, CommonModule, CustomermodalComponent, ConfirmationmodalComponent, CustomerResponseModalComponentComponent],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
@@ -18,8 +19,10 @@ export class CustomersComponent implements OnInit {
   selectedCustomer: any = null;
   isModalOpen = false;
   isConfirmationModalOpen = false;
-  selectedCustomerId: number = 0; // Attention : Assurez-vous que 0 n'est pas un ID valide.
+  selectedCustomerId: number = 0;
   selectedCustomerName: string = '';
+  showResponseModal: boolean = false;
+  customerResponse: any = null;
 
   constructor(private customerService: CustomerService) {}
 
@@ -41,26 +44,19 @@ export class CustomersComponent implements OnInit {
 
   filterCustomers(): void {
     if (this.searchTerm.trim() === '') {
-      this.filteredCustomers = [...this.customers]; // Réinitialisation
+      this.filteredCustomers = [...this.customers];
     } else {
       this.filteredCustomers = this.customers.filter(customer =>
         customer.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         customer.lastName.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-  
   }
-  
-  
-  
 
-  addCustomer(): void {
-  }
+  addCustomer(): void {}
 
   editCustomer(id: number): void {
-    
     const customerToEdit = this.customers.find(c => c.userId === id);
-    
     if (customerToEdit) {
       this.selectedCustomer = { ...customerToEdit };
       this.isModalOpen = true;
@@ -68,22 +64,18 @@ export class CustomersComponent implements OnInit {
       console.error("Client avec l'ID " + id + " non trouvé.");
     }
   }
-  
-  
-  // Ouvrir le modal de confirmation avec l'ID du client
+
   deleteCustomer(id: number, firstName: string, lastName: string): void {
     this.selectedCustomerId = id;
-    this.selectedCustomerName = `${firstName} ${lastName}`; //Stocke le nom et prénom
+    this.selectedCustomerName = `${firstName} ${lastName}`;
     this.isConfirmationModalOpen = true;
   }
-  
 
-   // Gérer la confirmation ou l'annulation dans le modal
-   handleConfirmation(confirmed: boolean): void {
+  handleConfirmation(confirmed: boolean): void {
     if (confirmed && this.selectedCustomerId !== null && this.selectedCustomerName) {
       this.customerService.deleteCustomer(this.selectedCustomerId).subscribe({
         next: (response) => {
-          this.getCustomers(); // Recharge la liste des clients après suppression
+          this.getCustomers();
           this.isConfirmationModalOpen = false;
         },
         error: (error) => {
@@ -94,17 +86,31 @@ export class CustomersComponent implements OnInit {
       this.isConfirmationModalOpen = false;
     }
   }
-  
+
   openModal(): void {
-    this.selectedCustomer = { lastName: '', firstName: '', phoneNumber: '', registrationDate: '' }; // Réinitialisation
+    this.selectedCustomer = { lastName: '', firstName: '', phoneNumber: '', registrationDate: '' };
     this.isModalOpen = true;
   }
-  
+
   closeModal(): void {
     this.isModalOpen = false;
-    this.selectedCustomer = null;  // Réinitialiser les données
+    this.selectedCustomer = null;
+    this.getCustomers();
   }
 
-  testClick(): void {
+  handleSaveCustomer(response: any): void {
+    this.customerResponse = response;
+
+    // Vérification si c'est un ajout ou une modification
+    if (response && !response.userId) {
+      // Si il n'y a pas de userId, c'est un ajout
+      this.showResponseModal = true;
+    } else {
+      // Si il y a un userId, c'est une modification
+      this.showResponseModal = false;
+    }
+  
+    // Fermer le modal
+    this.closeModal();
   }
 }

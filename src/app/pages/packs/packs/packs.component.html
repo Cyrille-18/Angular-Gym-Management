@@ -1,0 +1,77 @@
+<body>
+  <div class="customer-container">
+    <div class="header-container">
+      <div class="controls-wrapper">
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Rechercher une offre..."
+            [(ngModel)]="searchTerm"
+            (input)="filterpacks()"
+          />
+        </div>
+        <button class="add-button" (click)="openModal()">
+          <span>＋</span>
+          Ajouter une offre
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>Libellé</th>
+            <th>Description</th>
+            <th>Durée (en mois)</th>
+            <th>Prix mensuel</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pack of filteredpacks">
+            <td>{{ pack.packName }}</td>
+            <td>{{ pack.packDescription }}</td>
+            <td>{{ pack.durationMonths }}</td>
+            <td>{{ pack.monthlyPrice }} FCFA</td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="edit-button"
+                  title="Modifier"
+                  (click)="editPack(pack.packId)"
+                >
+                  ✎
+                </button>
+                <button
+                  class="delete-button"
+                  title="Supprimer"
+                  (click)="deletePack(pack.packId, pack.packName)"
+                >
+                  🗑
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredpacks.length === 0">
+            <td colspan="5" class="no-data">Aucun client trouvé</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-packmodal
+    *ngIf="isModalOpen"
+    (close)="closeModal()"
+    (save)="handleSavepack($event)"
+    [pack]="selectedPack"
+  >
+  </app-packmodal>
+  <app-confirmationmodal
+    *ngIf="isConfirmationModalOpen"
+    [objectId]="selectedPackId"
+    [objectName]="selectedPackName"
+    (close)="handledeletepackConfirmation($event)"
+  >
+  </app-confirmationmodal>
+</body>

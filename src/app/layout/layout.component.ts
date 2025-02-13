@@ -5,17 +5,18 @@ import { CommonModule } from '@angular/common';
 import { CustomersComponent } from '../pages/customers/customers.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AuthService } from '../services/authservice/auth.service';
+import { PacksComponent } from "../pages/packs/packs/packs.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [CommonModule, CustomersComponent, HomeComponent, RouterModule],
+  imports: [CommonModule, CustomersComponent, HomeComponent, RouterModule, PacksComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
   isSidebarOpen = true;
   activePage = '';
-  username = "junior";
+  username = "";
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {

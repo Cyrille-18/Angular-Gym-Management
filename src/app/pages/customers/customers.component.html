@@ -79,8 +79,8 @@
 
   <app-confirmationmodal
     *ngIf="isConfirmationModalOpen"
-    [customerId]="selectedCustomerId"
-    [customerName]="selectedCustomerName"
+    [objectId]="selectedCustomerId"
+    [objectName]="selectedCustomerName"
     (close)="handleConfirmation($event)"
   >
   </app-confirmationmodal>

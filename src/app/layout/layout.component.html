@@ -27,7 +27,7 @@
         <i class="fas fa-users"></i>
         <span>Gestion Des Clients</span>
       </a>
-      <a routerLink="/messages" routerLinkActive="active" class="nav-item">
+      <a routerLink="/app/Offres" routerLinkActive="active" class="nav-item">
         <i class="fas fa-envelope"></i>
         <span>Gestion Des Offres</span>
       </a>
@@ -52,6 +52,7 @@
   <main class="main-content" [class.sidebar-closed]="!isSidebarOpen">
     <app-home *ngIf="activePage === '/app/Accueil'"></app-home>
     <app-customers *ngIf="activePage === '/app/Client'"></app-customers>
+    <app-packs *ngIf="activePage === '/app/Offres'"></app-packs>
   </main>
 </div>
 

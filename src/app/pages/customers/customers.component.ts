@@ -4,13 +4,19 @@ import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../services/customerservice/customer.service';
 import { CustomermodalComponent } from '../../utils/customermodal/customermodal.component';
 import { ConfirmationmodalComponent } from '../../utils/confirmationmodal/confirmationmodal/confirmationmodal.component';
-import { CustomerResponseModalComponentComponent } from '../../utils/customeresponsemodal/customer-response-modal-component/customer-response-modal-component.component';  
+import { CustomerResponseModalComponentComponent } from '../../utils/customeresponsemodal/customer-response-modal-component/customer-response-modal-component.component';
 
 @Component({
   selector: 'app-customers',
-  imports: [FormsModule, CommonModule, CustomermodalComponent, ConfirmationmodalComponent, CustomerResponseModalComponentComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    CustomermodalComponent,
+    ConfirmationmodalComponent,
+    CustomerResponseModalComponentComponent,
+  ],
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css']
+  styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent implements OnInit {
   customers: any[] = [];
@@ -38,7 +44,7 @@ export class CustomersComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des clients:', error);
-      }
+      },
     });
   }
 
@@ -46,9 +52,14 @@ export class CustomersComponent implements OnInit {
     if (this.searchTerm.trim() === '') {
       this.filteredCustomers = [...this.customers];
     } else {
-      this.filteredCustomers = this.customers.filter(customer =>
-        customer.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        customer.lastName.toLowerCase().includes(this.searchTerm.toLowerCase())
+      this.filteredCustomers = this.customers.filter(
+        (customer) =>
+          customer.firstName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          customer.lastName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
       );
     }
   }
@@ -56,12 +67,12 @@ export class CustomersComponent implements OnInit {
   addCustomer(): void {}
 
   editCustomer(id: number): void {
-    const customerToEdit = this.customers.find(c => c.userId === id);
+    const customerToEdit = this.customers.find((c) => c.userId === id);
     if (customerToEdit) {
       this.selectedCustomer = { ...customerToEdit };
       this.isModalOpen = true;
     } else {
-      console.error("Client avec l'ID " + id + " non trouvé.");
+      console.error("Client avec l'ID " + id + ' non trouvé.');
     }
   }
 
@@ -72,7 +83,11 @@ export class CustomersComponent implements OnInit {
   }
 
   handleConfirmation(confirmed: boolean): void {
-    if (confirmed && this.selectedCustomerId !== null && this.selectedCustomerName) {
+    if (
+      confirmed &&
+      this.selectedCustomerId !== null &&
+      this.selectedCustomerName
+    ) {
       this.customerService.deleteCustomer(this.selectedCustomerId).subscribe({
         next: (response) => {
           this.getCustomers();
@@ -80,7 +95,7 @@ export class CustomersComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erreur lors de la suppression du client:', error);
-        }
+        },
       });
     } else {
       this.isConfirmationModalOpen = false;
@@ -88,7 +103,12 @@ export class CustomersComponent implements OnInit {
   }
 
   openModal(): void {
-    this.selectedCustomer = { lastName: '', firstName: '', phoneNumber: '', registrationDate: '' };
+    this.selectedCustomer = {
+      lastName: '',
+      firstName: '',
+      phoneNumber: '',
+      registrationDate: '',
+    };
     this.isModalOpen = true;
   }
 
@@ -109,7 +129,7 @@ export class CustomersComponent implements OnInit {
       // Si il y a un userId, c'est une modification
       this.showResponseModal = false;
     }
-  
+
     // Fermer le modal
     this.closeModal();
   }

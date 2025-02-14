@@ -31,7 +31,11 @@
         <i class="fas fa-envelope"></i>
         <span>Gestion Des Offres</span>
       </a>
-      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+      <a
+        routerLink="/app/Souscriptions"
+        routerLinkActive="active"
+        class="nav-item"
+      >
         <i class="fas fa-cog"></i>
         <span>Gestion Des Abonnements</span>
       </a>
@@ -53,6 +57,9 @@
     <app-home *ngIf="activePage === '/app/Accueil'"></app-home>
     <app-customers *ngIf="activePage === '/app/Client'"></app-customers>
     <app-packs *ngIf="activePage === '/app/Offres'"></app-packs>
+    <app-subscriptions
+      *ngIf="activePage === '/app/Souscriptions'"
+    ></app-subscriptions>
   </main>
 </div>
 

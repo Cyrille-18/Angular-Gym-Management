@@ -1,0 +1,46 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+    <span class="close-icon" (click)="closeModal()">&times;</span>
+    <h2>{{ modalTitle }}</h2>
+    <form (ngSubmit)="saveSubscription()">
+      <label for="client">Client</label>
+      <select
+        id="client"
+        class="input-style"
+        [(ngModel)]="subscription.customerId"
+        name="clientId"
+        required
+      >
+        <option value="">Sélectionnez un client</option>
+        <option *ngFor="let client of clients" [value]="client.userId">
+          {{ client.lastName }} {{ client.firstName }}
+        </option>
+      </select>
+
+      <label for="offer">Offre</label>
+      <select
+        id="offer"
+        class="input-style"
+        [(ngModel)]="subscription.packId"
+        name="offerId"
+        required
+      >
+        <option value="">Sélectionnez une offre</option>
+        <option *ngFor="let offer of offers" [value]="offer.packId">
+          Offre {{ offer.packName }}
+        </option>
+      </select>
+
+      <label for="subscriptionDate">Date de souscription</label>
+      <input
+        type="date"
+        id="subscriptionDate"
+        [(ngModel)]="subscription.subscriptionDate"
+        name="subscriptionDate"
+        disabled
+      />
+
+      <button type="submit">{{ buttonText }}</button>
+    </form>
+  </div>
+</div>

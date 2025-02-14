@@ -46,9 +46,8 @@ export class LayoutComponent {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-
   shouldShowLayout(): boolean {
-    return this.router.url !== '/';
+    return this.router.url !== '/' && this.router.url !== '/userhome';
   }
 
   onLogout() {

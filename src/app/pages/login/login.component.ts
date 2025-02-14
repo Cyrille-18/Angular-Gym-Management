@@ -8,25 +8,30 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  username: string = "";
-  password: string ="";
-  errormessage: string = "";
+  username: string = '';
+  password: string = '';
+  errormessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login(){
+  login() {
     this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        this.authService.setToken(response.token);
-        this.router.navigate(['/app/Accueil']);
+      next: async (response) => {
+        await this.authService.setToken(response.token);
+
+        const roles = this.authService.getUserRoles();
+        if (roles.length === 0) {
+          this.router.navigate(['/userhome']);
+        } else {
+          this.router.navigate(['/app/Accueil']);
+        }
       },
       error: (err) => {
         this.errormessage = err.error.message;
-      }
-    }
-  );
+      },
+    });
   }
 }

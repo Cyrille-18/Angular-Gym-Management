@@ -39,4 +39,22 @@ export class SubscriptionsService {
         })
       );
   }
+
+  // Récupère la souscription en cours de l'utilisateur connecté
+  getCurrentSubscription(): Observable<any> {
+    const token = localStorage.getItem('token'); // Récupère le token de l'utilisateur connecté
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any>(`${this.baseapiUrl}/current`, { headers }).pipe(
+      catchError((error) => {
+        console.error(
+          'Erreur lors de la récupération de la souscription:',
+          error
+        );
+        return throwError(error);
+      })
+    );
+  }
 }

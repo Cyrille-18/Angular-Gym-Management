@@ -4,26 +4,32 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private jwtHelper = new JwtHelperService();
   private role: string[] = [];
   private usernameSubject = new BehaviorSubject<string | null>(null);
-  
+
   constructor(private http: HttpClient) {
     this.decodeToken();
   }
 
   login(username: string, password: string) {
-    return this.http.post<{ token: string }>('http://localhost:8080/auth/login', { username, password });
+    return this.http.post<{ token: string }>(
+      'http://localhost:8080/auth/login',
+      { username, password }
+    );
   }
 
-  setToken(token: string) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('token', token);
-      this.decodeToken();
-    }
+  setToken(token: string): Promise<void> {
+    return new Promise((resolve) => {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('token', token);
+        this.decodeToken();
+        resolve();
+      }
+    });
   }
 
   getToken(): string | null {
@@ -44,7 +50,7 @@ export class AuthService {
     } else {
       this.usernameSubject.next(null);
     }
-    console.log('Rôles de l\'utilisateur:', this.role);
+    console.log("Rôles de l'utilisateur:", this.role);
   }
 
   getUserRoles(): string[] {

@@ -5,12 +5,17 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { LayoutComponent } from './layout/layout.component';
 import { PacksComponent } from './pages/packs/packs/packs.component';
 import { SubscriptionsComponent } from './pages/subscriptions/subscriptions/subscriptions.component';
+import { UserhomeComponent } from './pages/userhome/userhome.component';
 
 export const routes: Routes = [
   // Route sans layout (Page de connexion)
   {
     path: '',
     component: LoginComponent,
+  },
+  {
+    path: 'userhome',
+    component: UserhomeComponent,
   },
 
   // Routes avec layout (Dashboard)

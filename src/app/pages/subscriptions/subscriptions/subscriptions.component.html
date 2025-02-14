@@ -1,0 +1,80 @@
+<body>
+  <div class="customer-container">
+    <div class="header-container">
+      <div class="controls-wrapper">
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Rechercher un abonné..."
+            [(ngModel)]="searchTerm"
+            (input)="filterCustomers()"
+          />
+        </div>
+        <button class="add-button" (click)="openModal()">
+          <span>＋</span> Souscrire un client
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Offre</th>
+            <th>Date Début</th>
+            <th>Date Fin</th>
+            <th>État</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let subscription of filteredsubscriptions">
+            <td>{{ subscription.customer.lastName }}</td>
+            <td>{{ subscription.customer.firstName }}</td>
+            <td>{{ subscription.pack.packName }}</td>
+            <td>{{ subscription.startDate | date : "dd MMM yyyy" }}</td>
+            <td>
+              {{
+                getEndDate(
+                  subscription.startDate,
+                  subscription.pack.durationMonths
+                ) | date : "dd MMM yyyy"
+              }}
+            </td>
+            <td
+              [ngClass]="
+                getStatusClass(
+                  subscription.startDate,
+                  subscription.pack.durationMonths
+                )
+              "
+            >
+              {{
+                getSubscriptionStatus(
+                  subscription.startDate,
+                  subscription.pack.durationMonths
+                )
+              }}
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="edit-button" title="Modifier">✎</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredsubscriptions.length === 0">
+            <td colspan="7" class="no-data">Aucun client trouvé</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <app-subscription-modal
+    *ngIf="isModalOpen"
+    (close)="closeModal()"
+    (save)="handleSaveCustomer($event)"
+  ></app-subscription-modal>
+</body>
